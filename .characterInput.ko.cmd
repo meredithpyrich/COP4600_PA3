@@ -1,0 +1,1 @@
+cmd_/home/meredith/pa3/characterInput.ko := ld -r -m elf_i386 -T ./scripts/module-common.lds --build-id  -o /home/meredith/pa3/characterInput.ko /home/meredith/pa3/characterInput.o /home/meredith/pa3/characterInput.mod.o
