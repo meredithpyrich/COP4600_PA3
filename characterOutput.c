@@ -3,7 +3,13 @@
 #include <linux/kernel.h>
 #include <linux/fs.h>
 #include <asm/uaccess.h>
+#include <linux/mutex.h>
 
+#define DEVICE_NAME "character"
+#define CLASS_NAME "chara"
+#define BUFFER_SIZE 1024
+
+MODULE_LICENSE("GPL");
 
 int init_module(void)
 {
