@@ -5,7 +5,7 @@
 #include <asm/uaccess.h>
 #include <linux/mutex.h>
 
-#define DEVICE_NAME "character"
+#define DEVICE_NAME "characterInput"
 #define CLASS_NAME "chara"
 #define BUFFER_SIZE 1024
 
@@ -19,6 +19,7 @@ static struct device* devicePointer = NULL;
 
 static DEFINE_MUTEX(chara_mutex);
 
+EXPORT_SYMBOL(deviceClass);
 EXPORT_SYMBOL(ourInternalBuffer);
 EXPORT_SYMBOL(messageLength);
 EXPORT_SYMBOL(chara_mutex);

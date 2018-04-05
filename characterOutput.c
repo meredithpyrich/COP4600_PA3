@@ -5,7 +5,7 @@
 #include <asm/uaccess.h>
 #include <linux/mutex.h>
 
-#define DEVICE_NAME "character"
+#define DEVICE_NAME "characterOutput"
 #define CLASS_NAME "chara"
 #define BUFFER_SIZE 1024
 
@@ -14,7 +14,7 @@ MODULE_LICENSE("GPL");
 static int majorDeviceNumber;
 extern char ourInternalBuffer[BUFFER_SIZE];
 extern int messageLength;
-static struct class* deviceClass = NULL;
+extern struct class* deviceClass;
 static struct device* devicePointer = NULL;
 
 static void shiftBuffer(int shift);
@@ -58,19 +58,19 @@ int init_module(void)
 	
 	
 	// Register device class
-	deviceClass = class_create(THIS_MODULE, CLASS_NAME);
-	if (IS_ERR(deviceClass))
+	//deviceClass = class_create(THIS_MODULE, CLASS_NAME);
+	/*if (IS_ERR(deviceClass))
 	{
 		unregister_chrdev(majorDeviceNumber, DEVICE_NAME);
 		printk(KERN_ALERT "Failed to register class\n");
 		return PTR_ERR(deviceClass);
-	}
+	}*/
 
 	// Register driver
 	devicePointer = device_create(deviceClass, NULL, MKDEV(majorDeviceNumber, 0), NULL, DEVICE_NAME);
 	if (IS_ERR(devicePointer))
 	{
-		class_destroy(deviceClass);
+		//class_destroy(deviceClass);
 		unregister_chrdev(majorDeviceNumber, DEVICE_NAME);
 		printk(KERN_ALERT "Failed to create device\n");
 	}		
@@ -83,9 +83,9 @@ void cleanup_module(void)
 	// Remove the device
 	device_destroy(deviceClass, MKDEV(majorDeviceNumber, 0));
 	// Unregister device class
-	class_unregister(deviceClass);
+	//class_unregister(deviceClass);
 	// Remove device class
-	class_destroy(deviceClass);
+	//class_destroy(deviceClass);
 	// Unregister major device number
 	unregister_chrdev(majorDeviceNumber, DEVICE_NAME); 
 	printk(KERN_INFO "Removing success\n");
